@@ -4,7 +4,7 @@
   "description": "Image Viewer",
   "orientation": "any",
   "display": "standalone",
-  "start_url": "/",
+  "start_url": "/ImageViewer",
   "theme_color": "#000000",
   "background_color": "#FFFFFF",
   "icons": [
