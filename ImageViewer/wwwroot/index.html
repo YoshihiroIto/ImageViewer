@@ -54,6 +54,16 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            console.log('Registering service worker now');
+            navigator.serviceWorker.register('/serviceworker.js')
+                .then(function () {
+                    console.log('Service Worker Registered');
+                });
+        }
+    </script>
 </body>
 
 </html>
