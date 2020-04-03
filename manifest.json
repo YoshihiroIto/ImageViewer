@@ -1,18 +1,22 @@
 {
-  "short_name": "*Undefined*",
-  "name": "ImageViewer",
-  "start_url": "/",
+  "name": "Image Viewer",
+  "short_name": "Image Viewer",
+  "description": "Image Viewer",
+  "orientation": "any",
   "display": "standalone",
+  "start_url": "/",
+  "theme_color": "#000000",
+  "background_color": "#FFFFFF",
   "icons": [
     {
-      "src":"/default-icon-192x192.png",
-      "type":"image/png",
-      "sizes":"192x192"
+      "src": "images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
     },
     {
-      "src":"/default-icon-512x512.png",
-      "type":"image/png",
-      "sizes":"512x512"
+      "src": "images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ]
 }
