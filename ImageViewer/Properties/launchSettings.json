@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:35127/ImageViewer",
-      "sslPort": 44329
+      "applicationUrl": "http://localhost:58065/ImageViewer",
+      "sslPort": 44376
     }
   },
   "profiles": {
