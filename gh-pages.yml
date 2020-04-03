@@ -1,0 +1,34 @@
+name: Deploy to Github Pages
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    # .NET Core環境の構築
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v1.4.0
+      with:
+      # Blazor WebAssemblyが使えるSDKを指定
+        dotnet-version: '3.1.200'
+    - name: Build Application
+      # デプロイするProjectを指定 (今回は"ImageViewer")
+      run: dotnet publish -c Release ./ImageViewer/ImageViewer.csproj
+
+    - name: Deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+           github_token: ${{ secrets.GITHUB_TOKEN }}
+           # publishコマンドで出力されたファイルをgh-pagesブランチにpush
+           publish_dir: ./ImageViewer/bin/Release/netstandard2.1/publish/wwwroot/
+

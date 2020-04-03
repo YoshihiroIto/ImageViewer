@@ -1,0 +1,74 @@
+﻿@page "/"
+@using System.Reactive.Linq
+@using System.Reactive.Subjects
+@using ImageViewer.Model
+@inject HttpClient HttpClient
+
+<h4>Image viewer</h4>
+
+<div class="input-group mb-3">
+    <input
+        @oninput="OnKeywordChanged"
+         type="text"
+         class="form-control"
+         placeholder="keywords"
+         >
+</div>
+
+<div id="container">
+    @if (_imageData != null)
+    {
+        @foreach (var photo in _imageData.photos.photo)
+        {
+            <img src="@photo.Url"/>
+        }
+    }
+</div>
+
+<style>
+    #container {
+        display: grid;
+        grid-auto-rows: 160px;
+        grid-template-columns: repeat(auto-fill, 160px);
+    }
+</style>
+
+@code {
+    private ImageLoader _imageLoader;
+    private ImageData _imageData;
+
+    private Subject<string> _keyword;
+
+    private async Task SearchAsync(string keywords)
+    {
+        Console.WriteLine(keywords);
+
+        _imageData = null;
+        StateHasChanged();
+
+        if (string.IsNullOrWhiteSpace(keywords))
+            return;
+
+        _imageData = await _imageLoader.LoadAsync(keywords).ConfigureAwait(false);
+        StateHasChanged();
+    }
+
+    private void OnKeywordChanged(ChangeEventArgs e)
+    {
+        _keyword.OnNext(e.Value.ToString());
+    }
+
+    protected override void OnInitialized()
+    {
+        _imageLoader = new ImageLoader(HttpClient);
+
+        _keyword = new Subject<string>();
+        _keyword.Throttle(TimeSpan.FromMilliseconds(300))
+            .Subscribe(async x => { await SearchAsync(x).ConfigureAwait(false); });
+    }
+
+    public void Dispose()
+    {
+        _keyword.Dispose();
+    }
+}
