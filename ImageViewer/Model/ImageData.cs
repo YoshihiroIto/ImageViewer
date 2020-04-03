@@ -28,6 +28,6 @@
         public long isfamily { get; set; }
 
 
-        public string Url => $"http://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg";
+        public string Url => $"https://farm{farm}.staticflickr.com/{server}/{id}_{secret}_q.jpg";
     }
 }
