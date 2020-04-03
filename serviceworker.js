@@ -3,6 +3,7 @@ var cacheName = 'blazor-pwa-sample';
 var filesToCache = [
     //wwwroot
     '/',
+    '/404.html',
     '/index.html',
     '/manifest.json',
     '/serviceworker.js',
@@ -10,8 +11,6 @@ var filesToCache = [
     //css
     '/css/site.css',
     '/css/bootstrap/bootstrap.min.css',
-    '/css/open-iconic/font/css/open-iconic-bootstrap.min.css',
-    '/css/open-iconic/font/fonts/open-iconic.woff',
     //images
     '/images/icon-192x192.png',
     '/images/icon-512x512.png',
