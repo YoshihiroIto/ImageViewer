@@ -1,32 +1,29 @@
 ﻿@page "/"
+@inject HttpClient HttpClient
 @using System.Reactive.Linq
 @using System.Reactive.Subjects
 @using ImageViewer.Model
-@inject HttpClient HttpClient
 
 <h4>Image viewer</h4>
 
 <div class="input-group mb-3">
-    <input
-        @oninput="OnKeywordChanged"
-         type="text"
-         class="form-control"
-         placeholder="keywords"
-         >
+    <input @oninput="OnKeywordChanged"
+            type="text"
+            class="form-control"
+            placeholder="keywords">
 </div>
 
-<div id="container">
-    @if (_imageData != null)
-    {
+@if (_imageData != null)
+{
+    <div id="container">
         @foreach (var photo in _imageData.photos.photo)
         {
-            <img 
-                 width="120"
+            <img width="120"
                  height="120"
-                src="@photo.Url"/>
+                 src="@photo.Url"/>
         }
-    }
-</div>
+    </div>
+}
 
 <style>
     #container {
@@ -36,7 +33,8 @@
     }
 </style>
 
-@code {
+@code
+{
     private ImageLoader _imageLoader;
     private ImageData _imageData;
 
@@ -65,7 +63,7 @@
 
         _keyword = new Subject<string>();
         _keyword.Throttle(TimeSpan.FromMilliseconds(300))
-            .Subscribe(async x => { await SearchAsync(x).ConfigureAwait(false); });
+            .Subscribe(x => SearchAsync(x));
     }
 
     public void Dispose()
