@@ -1,5 +1,7 @@
 ﻿@page "/"
 @inject HttpClient HttpClient
+@implements IDisposable
+
 @using System.Reactive.Linq
 @using System.Reactive.Subjects
 @using ImageViewer.Model
