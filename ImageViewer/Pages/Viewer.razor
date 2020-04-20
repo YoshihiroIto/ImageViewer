@@ -54,15 +54,24 @@
     private async Task SearchAsync(string keywords)
     {
         _imageData = null;
-        StateHasChanged();
-
-        if (string.IsNullOrWhiteSpace(keywords))
-            return;
-
         _isLoading = true;
         StateHasChanged();
 
-        _imageData = await _imageLoader.LoadAsync(keywords).ConfigureAwait(false);
+        string currentKeywords;
+
+        do
+        {
+            if (string.IsNullOrWhiteSpace(keywords))
+            {
+                _imageData = null;
+                break;
+            }
+
+            currentKeywords = keywords;
+
+            _imageData = await _imageLoader.LoadAsync(keywords).ConfigureAwait(false);
+
+        } while (currentKeywords != keywords);
 
         _isLoading = false;
         StateHasChanged();
