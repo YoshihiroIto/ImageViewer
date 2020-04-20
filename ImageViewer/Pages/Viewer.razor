@@ -15,20 +15,27 @@
             placeholder="keywords">
 </div>
 
-@if (_imageData != null)
-{
-    <div id="container">
-        @foreach (var photo in _imageData.photos.photo)
+    @if (_isLoading)
+    {
+        <div class="loader"></div>
+    }
+    else
+    {
+        @if (_imageData != null)
         {
-            <img width="120"
-                 height="120"
-                 src="@photo.Url"/>
+            <div id="result">
+                @foreach (var photo in _imageData.photos.photo)
+                {
+                    <img width="120"
+                         height="120"
+                         src="@photo.Url"/>
+                }
+            </div>
         }
-    </div>
-}
+    }
 
 <style>
-    #container {
+    #result {
         display: grid;
         grid-auto-rows: 124px;
         grid-template-columns: repeat(auto-fill, 124px);
@@ -42,6 +49,8 @@
 
     private Subject<string> _keyword;
 
+    private bool _isLoading;
+
     private async Task SearchAsync(string keywords)
     {
         _imageData = null;
@@ -50,7 +59,12 @@
         if (string.IsNullOrWhiteSpace(keywords))
             return;
 
+        _isLoading = true;
+        StateHasChanged();
+
         _imageData = await _imageLoader.LoadAsync(keywords).ConfigureAwait(false);
+
+        _isLoading = false;
         StateHasChanged();
     }
 
