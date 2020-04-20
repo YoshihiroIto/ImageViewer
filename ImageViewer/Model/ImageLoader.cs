@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
+using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
 
 namespace ImageViewer.Model
 {
@@ -17,7 +17,7 @@ namespace ImageViewer.Model
         {
             var url = MakeRequestUrl(tags);
 
-            return _httpClient.GetJsonAsync<ImageData>(url);
+            return _httpClient.GetFromJsonAsync<ImageData>(url);
         }
 
         private static string MakeRequestUrl(string tags)
